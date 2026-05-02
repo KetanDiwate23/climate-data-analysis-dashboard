@@ -13,6 +13,31 @@ This project is a **satellite-inspired climate data analysis pipeline** built wi
 
 ---
 
+## 📊 Charts Preview
+
+### 1. Temperature Trend (2020–2024)
+![Temperature Trend](charts/01_temperature_trend.png)
+
+### 2. Rainfall vs Historical Average
+![Rainfall Comparison](charts/02_rainfall_comparison.png)
+
+### 3. Temperature Anomaly Heatmap
+![Anomaly Heatmap](charts/03_anomaly_heatmap.png)
+
+### 4. Regional Comparison
+![Regional Comparison](charts/04_regional_comparison.png)
+
+### 5. Seasonal Dashboard
+![Seasonal Dashboard](charts/05_seasonal_dashboard.png)
+
+### 6. Correlation Matrix
+![Correlation Matrix](charts/06_correlation_matrix.png)
+
+### 7. Rolling Average Trend
+![Rolling Average](charts/07_rolling_average.png)
+
+---
+
 ## 📁 Project Structure
 
 ```
@@ -34,13 +59,13 @@ climate-data-analysis-dashboard/
 
 ---
 
-## 📊 Charts Generated
+## 📈 Charts Generated
 
 | # | Chart | Description |
 |---|-------|-------------|
 | 1 | Temperature Trend | Year-on-year monthly temp comparison (2020–2024) with max/min shaded band |
 | 2 | Rainfall Comparison | 2024 actual rainfall vs. 4-year historical average with deficit/surplus annotation |
-| 3 | Anomaly Heatmap | 10×12 grid heatmap of temperature anomalies (deviation from baseline mean) |
+| 3 | Anomaly Heatmap | 5×12 grid heatmap of temperature anomalies (deviation from baseline mean) |
 | 4 | Regional Comparison | Side-by-side multi-region temp profiles and annual rainfall ranking |
 | 5 | Seasonal Dashboard | 4-panel summary: temp range, humidity & wind, rainfall intensity, pressure |
 | 6 | Correlation Matrix | Pearson correlation heatmap across all climate variables |
@@ -51,7 +76,7 @@ climate-data-analysis-dashboard/
 ## 🗃️ Dataset
 
 **File:** `dataset.csv`  
-**Records:** ~192 rows (monthly data)  
+**Records:** 96 rows (monthly data)  
 **Regions:** Nagpur, Kerala, Rajasthan, Punjab  
 **Years:** 2020 – 2024  
 
@@ -77,7 +102,7 @@ climate-data-analysis-dashboard/
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/your-username/climate-data-analysis-dashboard.git
+git clone https://github.com/KetanDiwate23/climate-data-analysis-dashboard.git
 cd climate-data-analysis-dashboard
 ```
 
@@ -138,10 +163,6 @@ MIT License — free to use, modify, and distribute.
 
 ## 👤 Author
 
-**[Your Name]**  
-B.Tech — [Your Branch], [Your College]  
-[LinkedIn](https://linkedin.com/in/your-profile) · [GitHub](https://github.com/your-username)
-
----
-
-*Resume Line: "Developed a Climate Data Analysis and Visualization System in Python using Pandas, NumPy, and Matplotlib to process 5-year meteorological datasets, identify temperature anomalies using z-score statistical modeling, and generate multi-panel graphical dashboards for regional climate comparison."*
+**Ketan Diwate**  
+B.Tech — Data Science, G.H. Raisoni College of Engineering, Nagpur  
+[LinkedIn](https://www.linkedin.com/in/ketan-diwate) · [GitHub](https://github.com/KetanDiwate23)
