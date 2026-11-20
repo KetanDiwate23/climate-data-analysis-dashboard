@@ -1,7 +1,6 @@
-
 #  Climate Data Analysis & Visualization System
 #  Author  : [Ketan Diwate]
-#  Dataset : India Meteorological Network — Nagpur & Regions
+#  Dataset : Open-Meteo (ERA5 reanalysis) — Nagpur, Kochi, Jaipur, Ludhiana
 #  Tools   : Python | Pandas | NumPy | Matplotlib | Seaborn
 
 
@@ -13,6 +12,8 @@ import matplotlib.patches as mpatches
 import seaborn as sns
 import warnings
 import os
+
+from insights import write_insights
 
 warnings.filterwarnings("ignore")
 
@@ -56,7 +57,12 @@ MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec
 def load_data(filepath: str = "dataset.csv") -> pd.DataFrame:
     df = pd.read_csv(filepath)
     df.columns = df.columns.str.strip()
-    df["month_name"] = pd.Categorical(df["month_name"], categories=MONTHS, ordered=True)
+    # Build month_name from the month number so it always matches MONTHS
+    # (the CSV stores full names like "January", but MONTHS holds "Jan")
+    df["month_name"] = pd.Categorical(
+        df["month"].astype(int).map(lambda m: MONTHS[m - 1]),
+        categories=MONTHS, ordered=True,
+    )
     print(f"✔  Loaded {len(df)} records | Regions: {df['region'].unique().tolist()}")
     print(f"   Years : {sorted(df['year'].unique().tolist())}")
     print(f"   Cols  : {df.columns.tolist()}\n")
@@ -407,7 +413,7 @@ def chart_rolling_average(df: pd.DataFrame) -> None:
 def main():
     print("\n" + "═" * 55)
     print("  CLIMATE DATA ANALYSIS & VISUALIZATION SYSTEM")
-    print("  India Meteorological Network — Python Pipeline")
+    print("  Open-Meteo / ERA5 — Python Pipeline")
     print("═" * 55 + "\n")
 
     df = load_data("dataset.csv")
@@ -422,8 +428,11 @@ def main():
     chart_correlation_matrix(df)
     chart_rolling_average(df)
 
+    write_insights(df)
+
     print("\n" + "═" * 55)
     print("  ✔  All 7 charts saved to /charts/")
+    print("  ✔  Key findings saved to insights.md")
     print("═" * 55 + "\n")
 
 
