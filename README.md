@@ -1,12 +1,12 @@
 # 🛰️ Climate Data Analysis & Visualization System
 
-> Analyzed large-scale environmental datasets using Python to identify weather trends, seasonal variations, and regional patterns through statistical modeling and graphical dashboards.
+> Analyzed multi-year environmental datasets using Python to identify weather trends, seasonal variations, and regional patterns through statistical modeling and graphical dashboards.
 
 ---
 
 ## 📌 Project Overview
 
-This project is a **satellite-inspired climate data analysis pipeline** built with Python. It processes multi-year meteorological data from the India Meteorological Network and generates a suite of visualizations covering temperature trends, rainfall patterns, anomaly detection, and region-wise climate comparisons.
+This project is a **satellite-inspired climate data analysis pipeline** built with Python. It processes multi-year meteorological data (Open-Meteo / ERA5 reanalysis) and generates a suite of visualizations covering temperature trends, rainfall patterns, anomaly detection, and region-wise climate comparisons.
 
 **Designed for:** Aerospace / Research / Data Engineering portfolios  
 **Domain:** Environmental Data Science | Meteorology | Statistical Modeling
@@ -44,7 +44,13 @@ This project is a **satellite-inspired climate data analysis pipeline** built wi
 climate-data-analysis-dashboard/
 │
 ├── dataset.csv            ← Multi-region climate dataset (2020–2024)
+├── daily_data.csv        ← Daily data (about 7,300 rows) for SQL analysis
+├── fetch_data.py          ← Downloads real data from Open-Meteo
 ├── climate_analysis.py    ← Main analysis & visualization pipeline
+├── insights.py            ← Auto-generates insights.md from the data
+├── sql_analysis.py        ← Loads data into SQLite and runs queries.sql
+├── queries.sql            ← SQL analysis (GROUP BY, RANK, LAG, rolling AVG)
+├── app.py                 ← Interactive Streamlit dashboard
 ├── requirements.txt       ← Python dependencies
 ├── README.md              ← Project documentation
 └── charts/                ← Auto-generated chart outputs (PNG)
@@ -76,7 +82,7 @@ climate-data-analysis-dashboard/
 ## 🗃️ Dataset
 
 **File:** `dataset.csv`  
-**Records:** 96 rows (monthly data)  
+**Records:** 240 monthly rows (4 regions x 5 years x 12 months) in `dataset.csv`, plus 7,308 daily rows in `daily_data.csv` (SQL analysis)  
 **Regions:** Nagpur, Kerala, Rajasthan, Punjab  
 **Years:** 2020 – 2024  
 
@@ -94,7 +100,7 @@ climate-data-analysis-dashboard/
 | `wind_kmh` | km/h | Average wind speed |
 | `pressure_hpa` | hPa | Average atmospheric pressure |
 
-> **Data source:** Modeled after India Meteorological Department (IMD) station records and NOAA ERA5 reanalysis data.
+> **Data source:** Weather data by [Open-Meteo.com](https://open-meteo.com/) (CC BY 4.0), based on ERA5 reanalysis from Copernicus / ECMWF, downloaded with `fetch_data.py`. Each region is represented by one city: Nagpur, Kerala = Kochi, Rajasthan = Jaipur, Punjab = Ludhiana. Values are reanalysis data, not direct station readings.
 
 ---
 
@@ -111,12 +117,23 @@ cd climate-data-analysis-dashboard
 pip install -r requirements.txt
 ```
 
-### 3. Run the analysis
+### 3. (Optional) Download real data
+```bash
+python fetch_data.py
+```
+Pulls 2020–2024 data for Nagpur, Kerala (Kochi), Rajasthan (Jaipur) and Punjab (Ludhiana) from the free Open-Meteo API. It writes monthly data to `dataset.csv` and daily data to `daily_data.csv`.
+
+### 4. Run the analysis
 ```bash
 python climate_analysis.py
 ```
+All 7 charts are saved to `charts/` and the key findings are written to `insights.md`.
 
-All 7 charts will be saved to the `charts/` folder automatically.
+### 5. SQL analysis and interactive dashboard
+```bash
+python sql_analysis.py      # runs queries.sql on the data in SQLite
+streamlit run app.py        # opens the interactive dashboard
+```
 
 ---
 
@@ -129,6 +146,8 @@ All 7 charts will be saved to the `charts/` folder automatically.
 | **Pearson Correlation** | Measuring relationships between climate variables |
 | **Grouped Aggregation** | Monthly/annual statistics by region and year |
 | **Pivot Tables** | Restructuring data for heatmap visualization |
+| **SQL window functions** | RANK, LAG and rolling AVG in `queries.sql` (SQLite) |
+| **Linear trend (polyfit)** | Yearly warming/cooling slope in `insights.py` |
 
 ---
 
@@ -141,16 +160,19 @@ All 7 charts will be saved to the `charts/` folder automatically.
 | `NumPy` | Numerical operations, z-score calculation |
 | `Matplotlib` | All chart rendering and layout |
 | `Seaborn` | Heatmaps and statistical visualization |
+| `SQLite` | SQL analysis with window functions |
+| `Streamlit` | Interactive dashboard |
+| `Requests` | Fetching data from the Open-Meteo API |
 
 ---
 
 ## 🔧 Extend This Project
 
 Ideas to expand:
-- [ ] Add real-time data fetch from [Open-Meteo API](https://open-meteo.com/) (free, no key needed)
+- [x] Real data fetch from [Open-Meteo API](https://open-meteo.com/) (`fetch_data.py`)
 - [ ] Add more Indian cities (Mumbai, Chennai, Delhi, Kolkata)
 - [ ] Export summary statistics to a PDF report
-- [ ] Add a Streamlit web dashboard for interactive exploration
+- [x] Streamlit web dashboard for interactive exploration (`app.py`)
 - [ ] Train a simple ML model (Linear Regression / LSTM) to forecast temperature
 
 ---
